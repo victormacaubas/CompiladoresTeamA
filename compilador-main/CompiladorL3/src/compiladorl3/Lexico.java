@@ -148,13 +148,15 @@ public class Lexico {
                         lexema.append(c);
                         estado = 5;
                     } else {
-                        throw new RuntimeException("Erro: número float inválido \"" + lexema.toString() + "\"");
+                        throw new RuntimeException("Erro: token inválido para tipo char \"" + lexema.toString() + "\"");
                     }
                     break;
                 case 5:
-                    if (this.isDigito(c)) { // Resolver caso da aspas simples
+                    if (this.isDigito(c)) { // Solve for ' ps: Try using ASCII table for valor
                         lexema.append(c);
                         estado = 6;
+                    } else {
+                        throw new RuntimeException("Erro: token inválido para tipo char \"" + lexema.toString() + "\"");
                     }
                     break;
                 case 6:
@@ -168,6 +170,7 @@ public class Lexico {
                         this.back();
                         return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
                     }
+                    break;
                 case 8:
                     if (c == '>') {
                         lexema.append(c);
@@ -179,7 +182,47 @@ public class Lexico {
                         this.back();
                         return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
                     }
-                case 99:
+                    break;
+                case 9:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
+                case 10:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
+                case 11:
+                    if (c == '=') {
+                        lexema.append(c);
+                        estado = 12;
+                    } else {
+                        this.back();
+                        return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
+                    }
+                    break;
+                case 12:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
+                case 13:
+                    if (c == '=') {
+                        lexema.append(c);
+                        estado = 14;
+                    } else {
+                        this.back();
+                        return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
+                    }
+                    break;
+                case 14:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
+                case 15:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_CARACTER_ESPECIAL);
+                case 16:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_OPERADOR_ARITMETICO);
+                case 17:
+                    this.back();
+                    return new Token(lexema.toString(), Token.TIPO_PALAVRA_RESERVADA);
+                case 18:
                     return new Token(lexema.toString(), Token.TIPO_FIM_CODIGO);
             }
         }
