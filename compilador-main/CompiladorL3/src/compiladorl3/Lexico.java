@@ -67,7 +67,6 @@ public class Lexico {
         StringBuffer lexema = new StringBuffer();
         while (this.hasNextChar()) {
             c = this.nextChar();
-            int ascii = (int) c;
             switch (estado) {
                 case 0:
                     if (c == ' ' || c == '\t' || c == '\n' || c == '\r') { // caracteres de espaço em branco ASCII
