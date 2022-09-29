@@ -67,6 +67,7 @@ public class Lexico {
         StringBuffer lexema = new StringBuffer();
         while (this.hasNextChar()) {
             c = this.nextChar();
+            int ascii = (int) c;
             switch (estado) {
                 case 0:
                     if (c == ' ' || c == '\t' || c == '\n' || c == '\r') { // caracteres de espaço em branco ASCII
@@ -106,7 +107,7 @@ public class Lexico {
                             c == '%') {
                         lexema.append(c);
                         estado = 16;
-                    } else if (Character.isAlphabetic(c)) { // resolver caso da áspas simples
+                    } else if ((int) c == 39) {
                         lexema.append(c);
                         estado = 4;
                     } else {
@@ -152,7 +153,7 @@ public class Lexico {
                     }
                     break;
                 case 5:
-                    if (this.isDigito(c)) { // Solve for ' ps: Try using ASCII table for valor
+                    if ((int) c == 39) {
                         lexema.append(c);
                         estado = 6;
                     } else {
