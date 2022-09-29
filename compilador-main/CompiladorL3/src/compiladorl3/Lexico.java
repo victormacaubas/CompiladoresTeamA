@@ -72,7 +72,7 @@ public class Lexico {
                     if (c == ' ' || c == '\t' || c == '\n' || c == '\r') { // caracteres de espaço em branco ASCII
                                                                            // tradicionais
                         estado = 0;
-                    } else if (this.isLetra(c) || c == '_') {
+                    } else if (this.isLetra(c)) {
                         lexema.append(c);
                         estado = 7;
                     } else if (this.isDigito(c)) {
@@ -106,56 +106,79 @@ public class Lexico {
                             c == '%') {
                         lexema.append(c);
                         estado = 16;
-                    }else if (c == ' ') {
+                    } else if (Character.isAlphabetic(c)) { // resolver caso da áspas simples
                         lexema.append(c);
-                        estado = 13;
-                    }
-                     else {
+                        estado = 4;
+                    } else {
                         lexema.append(c);
                         throw new RuntimeException("Erro: token inválido \"" + lexema.toString() + "\"");
                     }
                     break;
                 case 1:
-                    if (this.isLetra(c) || this.isDigito(c) || c == '.') {
-                        lexema.append(c);
-                        estado = 1;
-                    } else {
-                        this.back();
-                        return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
-                    }
-                    break;
-                case 2:
                     if (this.isDigito(c)) {
                         lexema.append(c);
-                        estado = 2;
+                        estado = 1;
                     } else if (c == '.') {
                         lexema.append(c);
-                        estado = 3;
+                        estado = 2;
                     } else {
                         this.back();
                         return new Token(lexema.toString(), Token.TIPO_INTEIRO);
                     }
                     break;
-                case 3:
+                case 2:
                     if (this.isDigito(c)) {
                         lexema.append(c);
-                        estado = 4;
+                        estado = 3;
                     } else {
                         throw new RuntimeException("Erro: número float inválido \"" + lexema.toString() + "\"");
                     }
                     break;
-                case 4:
+                case 3:
                     if (this.isDigito(c)) {
                         lexema.append(c);
-                        estado = 4;
+                        estado = 3;
                     } else {
                         this.back();
                         return new Token(lexema.toString(), Token.TIPO_REAL);
                     }
                     break;
+                case 4:
+                    if (this.isDigito(c) || this.isLetra(c)) {
+                        lexema.append(c);
+                        estado = 5;
+                    } else {
+                        throw new RuntimeException("Erro: número float inválido \"" + lexema.toString() + "\"");
+                    }
+                    break;
                 case 5:
+                    if (this.isDigito(c)) { // Resolver caso da aspas simples
+                        lexema.append(c);
+                        estado = 6;
+                    }
+                    break;
+                case 6:
                     this.back();
-                    return new Token(lexema.toString(), Token.TIPO_CARACTER_ESPECIAL);
+                    return new Token(lexema.toString(), Token.TIPO_CHAR);
+                case 7:
+                    if (this.isDigito(c) || this.isLetra(c)) {
+                        lexema.append(c);
+                        estado = 7;
+                    } else {
+                        this.back();
+                        return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
+                    }
+                case 8:
+                    if (c == '>') {
+                        lexema.append(c);
+                        estado = 9;
+                    } else if (c == '=') {
+                        lexema.append(c);
+                        estado = 10;
+                    } else {
+                        this.back();
+                        return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
+                    }
                 case 99:
                     return new Token(lexema.toString(), Token.TIPO_FIM_CODIGO);
             }
