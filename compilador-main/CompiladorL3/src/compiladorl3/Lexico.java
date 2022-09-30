@@ -156,7 +156,7 @@ public class Lexico {
                         lexema.append(c);
                         estado = 6;
                     } else {
-                        throw new RuntimeException("Erro: token inválido para tipo char \"" + lexema.toString() + "\"");
+                        throw new RuntimeException("Erro: token mal formatado para tipo char \"" + lexema.toString() + "\"");
                     }
                     break;
                 case 6:
