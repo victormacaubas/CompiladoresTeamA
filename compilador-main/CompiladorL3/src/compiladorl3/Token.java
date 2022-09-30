@@ -15,6 +15,7 @@ public class Token {
     public static int TIPO_CHAR = 2;
     public static int TIPO_IDENTIFICADOR = 3;
     public static int TIPO_OPERADOR_RELACIONAL = 4;
+    public static int TIPO_OPERADOR_ATRIBUICAO = 13;
     public static int TIPO_OPERADOR_ARITMETICO = 5;
     public static int TIPO_CARACTER_ESPECIAL = 6;
     public static int TIPO_PALAVRA_RESERVADA = 7;

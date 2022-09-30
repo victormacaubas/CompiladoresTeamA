@@ -166,6 +166,11 @@ public class Lexico {
                     if (this.isDigito(c) || this.isLetra(c)) {
                         lexema.append(c);
                         estado = 7;
+                    } else if (lexema.toString().equalsIgnoreCase("if") || lexema.toString().equalsIgnoreCase("else")
+                            || lexema.toString().equalsIgnoreCase("int") || lexema.toString().equalsIgnoreCase("float")
+                            || lexema.toString().equalsIgnoreCase("char") || lexema.toString().equalsIgnoreCase("while")
+                            || lexema.toString().equalsIgnoreCase("main")) {
+                        estado = 17;
                     } else {
                         this.back();
                         return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
@@ -195,7 +200,7 @@ public class Lexico {
                         estado = 12;
                     } else {
                         this.back();
-                        return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
+                        return new Token(lexema.toString(), Token.TIPO_OPERADOR_RELACIONAL);
                     }
                     break;
                 case 12:
@@ -207,7 +212,7 @@ public class Lexico {
                         estado = 14;
                     } else {
                         this.back();
-                        return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
+                        return new Token(lexema.toString(), Token.TIPO_OPERADOR_ATRIBUICAO);
                     }
                     break;
                 case 14:
