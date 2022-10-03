@@ -48,8 +48,8 @@ public class Lexico {
         this.indiceConteudo--;
     }
 
-    // Identificar se char é letra minúscula
     private boolean isLetra(char c) {
+        c = Character.toLowerCase(c);
         return (c >= 'a') && (c <= 'z');
     }
 

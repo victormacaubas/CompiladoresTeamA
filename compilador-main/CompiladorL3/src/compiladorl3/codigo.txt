@@ -1,5 +1,5 @@
 if
-'a
+'A'
 main
 44.0
 while
