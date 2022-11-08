@@ -17,11 +17,15 @@ public class CompiladorL3 {
     public static void main(String[] args) {
         // TODO code application logic here
         Lexico lexico = new Lexico("src\\compiladorl3\\codigo.txt");
-        Token t = null;
+        //Token t = null;
+        /* 
         while((t = lexico.nextToken()) != null){
             System.out.println(t.toString());
         }
+        */
 
+        Sintatico1 sintatico = new Sintatico1(lexico);
+        sintatico.S();
 
     }
     
