@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compiladorl3;
 
-/**
- *
- * @author tarci
- */
 public class Token {
     public static int TIPO_INTEIRO = 0;
     public static int TIPO_REAL = 1;
@@ -63,5 +54,4 @@ public class Token {
         }
         return "";
     }
-
 }

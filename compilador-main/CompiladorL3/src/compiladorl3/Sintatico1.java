@@ -12,9 +12,8 @@ public class Sintatico1 {
     public void S() {
         this.token = this.lexico.nextToken();
         this.E();
-
+        
         if (this.token.getTipo() == Token.TIPO_FIM_CODIGO) {
-
             System.out.println("O Código está massa! Arretado! Tu botou pra torar");
         }
     }
@@ -22,13 +21,10 @@ public class Sintatico1 {
     private void E() {
         this.T();
         this.El();
-
     }
 
     private void El() {
-
         if (this.token.getTipo() == Token.TIPO_OPERADOR_ARITMETICO) {
-
             this.OP();
             this.T();
             this.El();
@@ -36,11 +32,9 @@ public class Sintatico1 {
         } else {
 
         }
-
     }
 
     private void T() {
-
         if (this.token.getTipo() == Token.TIPO_IDENTIFICADOR || this.token.getTipo() == Token.TIPO_INTEIRO
                 || this.token.getTipo() == Token.TIPO_REAL) {
 
@@ -53,7 +47,6 @@ public class Sintatico1 {
     }
 
     private void OP() {
-
         if (this.token.getTipo() == Token.TIPO_OPERADOR_ARITMETICO) {
             this.token = this.lexico.nextToken();
 
@@ -62,5 +55,4 @@ public class Sintatico1 {
                     "Oxe, era para ser um operador aritmético (+, -, /, *) pertinho de " + this.token.getLexema());
         }
     }
-
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compiladorl3;
 
 import java.io.File;
@@ -14,10 +9,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author tarci
- */
+
 public class Lexico {
     private char[] conteudo;
     private int indiceConteudo;
@@ -48,6 +40,7 @@ public class Lexico {
         this.indiceConteudo--;
     }
 
+    // Indentificar se char é letra
     private boolean isLetra(char c) {
         c = Character.toLowerCase(c);
         return (c >= 'a') && (c <= 'z');
