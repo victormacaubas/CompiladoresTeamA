@@ -55,7 +55,7 @@ public class Sintatico1 {
 
         DecVariable();
 
-        while (this.token.getTipo() == Token.TIPO_IDENTIFICADOR || this.token.getLexema().equals("{") || this.token.getLexema().equals("while") || this.token.getLexema()equals("if")) {
+        while (this.token.getTipo() == Token.TIPO_IDENTIFICADOR || this.token.getLexema().equals("{") || this.token.getLexema().equals("while") || this.token.getLexema().equals("if")) {
             this.Comando();
             
         }
@@ -147,7 +147,7 @@ public class Sintatico1 {
     private void Iterations() {
 
         if (!this.token.getLexema().equals("while")) {
-            throw new SintaticException("while esperado, foi encontrado => " + this.token.getLexema().toString())
+            throw new SintaticException("while esperado, foi encontrado => " + this.token.getLexema().toString());
         }
 
         this.token = this.lexico.nextToken();
@@ -186,6 +186,62 @@ public class Sintatico1 {
     }
 
     private void aritmeticExp() {
+        this.termo();
+        this.e_Linha();
+    }
+
+    private void e_Linha() {
+
+        if (this.token.getTipo() == Token.TIPO_OPERADOR_ARITMETICO) {
+            if (token.getLexema().equals("+")) {
+                this.token = this.lexico.nextToken();
+
+            } else if (this.token.getLexema().equals("-")) {
+                this.token = this.lexico.nextToken();
+
+            } else {
+                throw new SintaticException("esperado um operador aritmetico, ao lado de =>  " + this.token.getLexema().toString());
+        
+            }
+            this.termo();
+            this.e_Linha();
+        }
+    }
+
+    private void termo() {
+        this.fator();
+        this.termoMulti();
+    }
+
+    private void termoMulti() {
+
+        if (this.token.getLexema().equals("*") || this.token.getLexema().equals("/")) {
+            this.token = this.lexico.nextToken();
+
+        } else {
+            throw new SintaticException("necessário operador aritmetico * ou /, foi encontrado => " + this.token.getLexema().toString());
+        }
+    }
+
+    private void fator() {
+        
+        if (token.getLexema().equals("(")) {
+            this.token = this.lexico.nextToken();
+            this.aritmeticExp();
+
+            if (!token.getLexema().equals(")")) {
+                throw new SintaticException(") esperado para finalizar expressão, ao lado de =>  " + this.token.getLexema().toString());
+            }
+
+            this.token = this.lexico.nextToken();
+            
+        }
+
+        if (this.token.getTipo() == 0 || this.token.getTipo() == 1 || this.token.getTipo() == 2 || this.token.getTipo() == 3) {
+            this.token = this.lexico.nextToken();
+        } else {
+            throw new SintaticException("Identificador, float, int ou char são esperados, foi encontrado => " + this.token.getLexema().toString());
+        }
     }
 
     private void DecVariable() {
