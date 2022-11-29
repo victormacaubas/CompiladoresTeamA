@@ -223,11 +223,22 @@ public class Sintatico1 {
     private void termoMulti() {
 
         if (this.token.getLexema().equals("*") || this.token.getLexema().equals("/")) {
-            this.token = this.lexico.nextToken();
+            if (this.token.getLexema().equals("*")) {
+                this.token = this.lexico.nextToken();
+            } else if (this.token.getLexema().equals("/")) {
+                this.token = this.lexico.nextToken();
+            } else {
+                throw new SintaticException ("Operador * ou / esperado, foi encontrado => " + this.token.getLexema().toString());
+            }
 
-        } else {
-            throw new SintaticException("necessário operador aritmetico * ou /, foi encontrado => " + this.token.getLexema().toString());
         }
+        /*
+        if (this.token.getLexema().equals(";")) {
+            this.token = this.lexico.nextToken();
+        }*/
+
+        //this.fator();
+        //this.termo();
     }
 
     private void fator() {
@@ -247,49 +258,56 @@ public class Sintatico1 {
         if (this.token.getTipo() == 0 || this.token.getTipo() == 1 || this.token.getTipo() == 2 || this.token.getTipo() == 3) {
             this.token = this.lexico.nextToken();
         } else {
-            throw new SintaticException("Identificador, float, int ou char são esperados, foi encontrado => " + this.token.getLexema().toString());
+            throw new SintaticException("Identificador, float, int ou char são esperados, foi encontrado => " + this.token.getLexema());
         }
     }
 
     private void DecVariable() {
 
         if (this.token.getLexema().equals("int") || this.token.getLexema().equals("float")
-                || this.token.getLexema().equals("char")) {
-            this.token = this.lexico.nextToken();
+        || this.token.getLexema().equals("char")) {
+
+            if (this.token.getLexema().equals("int") || this.token.getLexema().equals("float")
+                    || this.token.getLexema().equals("char")) {
+                this.token = this.lexico.nextToken();
+
+            } else {
+                throw new SintaticException("Necessario informar o tipo da id (int, float, char) Encontramos => "
+                        + this.token.getLexema().toString());
+            }
+
+            if (this.token.getTipo() == Token.TIPO_IDENTIFICADOR) {
+                this.storeVariable(this.token.getLexema());
+                this.token = this.lexico.nextToken();
+            } else {
+                throw new SintaticException(
+                        "Identificador é esperado aqui, Encontramos => " + this.token.getLexema().toString());
+            }
+
+            if (this.token.getLexema().equals(";")) {
+                this.token = this.lexico.nextToken();
+            } else {
+                throw new SintaticException(
+                        "; esperado para finalizar a declaração, ao lado de => " + this.token.getLexema().toString());
+            }
+            this.DecVariable();
 
         } else {
-            throw new SintaticException("Necessario informar o tipo da id (int, float, char) Encontramos => "
-                    + this.token.getLexema().toString());
+            
         }
-
-        if (this.token.getTipo() == Token.TIPO_IDENTIFICADOR) {
-            this.storeVariable(this.token.getLexema());
-            this.token = this.lexico.nextToken();
-        } else {
-            throw new SintaticException(
-                    "Identificador é esperado aqui, Encontramos => " + this.token.getLexema().toString());
-        }
-
-        if (this.token.getLexema().equals(";")) {
-            this.token = this.lexico.nextToken();
-        } else {
-            throw new SintaticException(
-                    "; esperado para finalizar a declaração, ao lado de => " + this.token.getLexema().toString());
-        }
-
-        if (this.token.getLexema().equals("int") || this.token.getLexema().equals("float")
-                || this.token.getLexema().equals("char")) {
-            DecVariable();
-
-        }
-
-        return;
 
     }
 
     private void storeVariable(String id) {
 
         this.idlList.add(id);
+        /* 
+        for (int i = 0; i < this.idlList.size(); i++) {
+            if (id.equals(idlList.get(i))) {
+
+                throw new SemanticException("Variável duplicada => " + this.token.getLexema().toString());
+            }
+        }*/
     }
 
     private void searchId(String id) {
