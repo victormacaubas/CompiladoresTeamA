@@ -1,2 +1,5 @@
-ident 100.3 +
-$
+int main(){
+    int var;
+    float cas@;
+}
+$ 

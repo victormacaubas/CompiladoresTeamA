@@ -30,6 +30,10 @@ public class Lexico {
         return this.conteudo[this.indiceConteudo++];
     }
 
+    private char prevChar() {
+        return this.conteudo[this.indiceConteudo-1];
+    }
+
     // Verifica existe próximo char ou chegou ao final do código fonte
     private boolean hasNextChar() {
         return indiceConteudo < this.conteudo.length;

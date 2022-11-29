@@ -1,14 +1,20 @@
 package compiladorl3;
 
+import java.util.ArrayList;
+
+import compiladorl3.Exepctions.SemanticException;
 import compiladorl3.Exepctions.SintaticException;
 
 public class Sintatico1 {
 
     private Lexico lexico;
     private Token token;
+    private int valueStored;
+    private ArrayList<String> idlList;
 
     public Sintatico1(Lexico lexico) {
         this.lexico = lexico;
+        this.idlList = new ArrayList<>();
     }
 
     public void S() {
@@ -32,7 +38,7 @@ public class Sintatico1 {
 
         this.token = this.lexico.nextToken();
 
-        if (!this.token.getLexema().equals(")")) {
+        if (!this.token.getLexema().equals("()")) {
             throw new SintaticException("Fechar o parenteses do main");
         }
 
@@ -122,6 +128,7 @@ public class Sintatico1 {
                     "é necessário declarar uma variável, foi encontrado => " + this.token.getLexema().toString());
 
         }
+        this.searchId(this.token.getLexema());
 
         this.token = this.lexico.nextToken();
 
@@ -256,6 +263,7 @@ public class Sintatico1 {
         }
 
         if (this.token.getTipo() == Token.TIPO_IDENTIFICADOR) {
+            this.storeVariable(this.token.getLexema());
             this.token = this.lexico.nextToken();
         } else {
             throw new SintaticException(
@@ -277,5 +285,28 @@ public class Sintatico1 {
 
         return;
 
+    }
+
+    private void storeVariable(String id) {
+
+        this.idlList.add(id);
+    }
+
+    private void searchId(String id) {
+
+        if (this.idlList.isEmpty()) {
+            throw new SemanticException("Necessário declarar uma variável " + this.token.getLexema().toString());
+        }
+
+        for (int i = 0; i < this.idlList.size(); i++) {
+            if (id.equals(idlList.get(i))) {
+                valueStored = 1;
+            }
+        }
+
+        if (valueStored != 1) {
+            throw new SemanticException("Necessário declarar uma variável " + this.token.getLexema().toString());
+        }
+        
     }
 }
