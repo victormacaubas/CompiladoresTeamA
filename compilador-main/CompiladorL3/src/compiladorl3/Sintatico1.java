@@ -38,7 +38,7 @@ public class Sintatico1 {
 
         this.token = this.lexico.nextToken();
 
-        if (!this.token.getLexema().equals("()")) {
+        if (!this.token.getLexema().equals(")")) {
             throw new SintaticException("Fechar o parenteses do main");
         }
 

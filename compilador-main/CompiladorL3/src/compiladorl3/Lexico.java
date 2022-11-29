@@ -42,6 +42,12 @@ public class Lexico {
     // Retrocede o índice que aponta para o "char da vez" em uma unidade
     private void back() {
         this.indiceConteudo--;
+
+        /* 
+        if (this.prevChar() != ' ') {
+            this.indiceConteudo--;
+
+        }*/
     }
 
     // Indentificar se char é letra
@@ -63,7 +69,7 @@ public class Lexico {
 
         StringBuffer lexema = new StringBuffer();
         while (this.hasNextChar()) {
-            c = this.nextChar();
+            c = nextChar();
             switch (estado) {
                 case 0:
                     if (c == ' ' || c == '\t' || c == '\n' || c == '\r') { // caracteres de espaço em branco ASCII
@@ -168,6 +174,7 @@ public class Lexico {
                             || lexema.toString().equalsIgnoreCase("char") || lexema.toString().equalsIgnoreCase("while")
                             || lexema.toString().equalsIgnoreCase("main")) {
                         estado = 17;
+                        this.back();
                     } else {
                         this.back();
                         return new Token(lexema.toString(), Token.TIPO_IDENTIFICADOR);
