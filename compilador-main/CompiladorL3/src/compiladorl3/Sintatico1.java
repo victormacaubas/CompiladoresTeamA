@@ -27,7 +27,7 @@ public class Sintatico1 {
         this.token = this.lexico.nextToken();
 
         if (!this.token.getLexema().equals("main")) {
-            throw new SintaticException("Colocoque a main");
+            throw new SintaticException("Coloque a main");
         }
 
         this.token = this.lexico.nextToken();
@@ -87,7 +87,7 @@ public class Sintatico1 {
 
             if (!this.token.getLexema().equals("(")) {
                 throw new SintaticException(
-                        "( esperado para finalizar a declaração, ao lado de =>  " + this.token.getLexema().toString());
+                        "( esperado para finalizar a declaração, antes de =>  " + this.token.getLexema().toString());
             }
 
             this.token = this.lexico.nextToken();
@@ -104,7 +104,11 @@ public class Sintatico1 {
             if (token.getLexema().equals("else")) {
                 this.token = this.lexico.nextToken();
                 this.Comando();
+            } else {
+
             }
+        } else {
+            
         }
 
     }
@@ -144,7 +148,7 @@ public class Sintatico1 {
 
         if (!this.token.getLexema().equals(";")) {
             throw new SintaticException(
-                    "; esperado para finalizar a declaração, ao lado de => " + this.token.getLexema().toString());
+                    "; esperado para finalizar a declaração, erro proximo ao elemento => " + this.token.getLexema().toString());
         }
 
         this.token = this.lexico.nextToken();
@@ -300,14 +304,14 @@ public class Sintatico1 {
 
     private void storeVariable(String id) {
 
-        this.idlList.add(id);
-        /* 
         for (int i = 0; i < this.idlList.size(); i++) {
             if (id.equals(idlList.get(i))) {
 
                 throw new SemanticException("Variável duplicada => " + this.token.getLexema().toString());
             }
-        }*/
+        }
+
+        this.idlList.add(id);
     }
 
     private void searchId(String id) {

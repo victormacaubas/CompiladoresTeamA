@@ -30,7 +30,7 @@ public class Lexico {
         return this.conteudo[this.indiceConteudo++];
     }
 
-    private char prevChar() {
+    public char prevChar() {
         return this.conteudo[this.indiceConteudo-1];
     }
 

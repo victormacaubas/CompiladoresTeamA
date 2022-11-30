@@ -1,7 +1,13 @@
 int main(){
 	int a;
-	int b;
-	int a;
-	a = 1;	
+	a = 1;
+	while(a == 1){
+		a = 5;
+	}
+	if(a < 10){
+	
+	}else{
+		else{}
+	}
 }
 $ 
